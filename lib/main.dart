@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/widget_gallery.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,25 +17,15 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       //  앱 전체의 테마 정보
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       //  앱의 기본 화면
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+      //  라우팅 정보 추가
+      routes: {
+        '/gallery': (context) => const WidgetGallery(title: "WidgetGallery"),
+      },
     );
   }
 }
@@ -101,19 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
@@ -121,6 +99,53 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            // const Spacer(),
+            const SizedBox(height: 20),
+
+            //  이벤트 테스트 패널
+            GestureDetector(
+              //  일반 위젯에게 사용자 인터렉션을 허용하는 위젯
+              //  tap, double tap, long press 이벤트 발생시
+              //  SnackBar로 이벤트를 표시
+              onTap: () {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text("Panel Tapped!")));
+              },
+              onDoubleTap: () {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text("Panel Double Tapped!")));
+              },
+              onLongPress: () {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text("Panel Long Pressed!")));
+              },
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                height: 100,
+                color: Colors.purple,
+                child: const Center(
+                  child: Text(
+                    "제스처 테스터",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // ScaffoldMessenger.of(
+                //   context,
+                // ).showSnackBar(SnackBar(content: Text("위젯 갤러리로..")));
+                Navigator.pushNamed(context, '/gallery');
+              },
+              child: const Text("위젯 갤러리로 이동"),
+            ),
+
+            //  /이벤트 테스트 패널
           ],
         ),
       ),
