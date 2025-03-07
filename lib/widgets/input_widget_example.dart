@@ -19,6 +19,8 @@ class _InputWidgetExampleState extends State<InputWidgetExample> {
 
   @override
   Widget build(BuildContext context) {
+    //  입력 양식이 키보드에 가리는 것을 방지하기 위해
+    //  SingleChildScrollView로 감싼다.
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
